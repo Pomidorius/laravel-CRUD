@@ -1,0 +1,42 @@
+*.log
+.DS_Store
+Thumbs.db
+
+# Local environment
+.env
+.env.backup
+.env.production
+.env.testing
+.env.local
+
+# Framework generated files
+/storage/*.key
+/storage/pail
+/storage/framework/*
+!/storage/framework/.gitignore
+/storage/logs/*
+!/storage/logs/.gitignore
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+
+# Build outputs
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/vendor
+
+# Tooling metadata
+.phpactor.json
+.phpunit.result.cache
+/.phpunit.cache
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
+/auth.json
+
+# Homestead / Vagrant
+Homestead.json
+Homestead.yaml
