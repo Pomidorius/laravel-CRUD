@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
@@ -20,9 +22,10 @@ class UserController extends Controller
         return view('users.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        $data = $this->validateUser($request);
+        // $data = $this->validateUser($request);
+        $data = $request->validated();
 
         User::create($data);
 
@@ -34,9 +37,10 @@ class UserController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        $data = $this->validateUser($request, $user->id);
+        // $data = $this->validateUser($request, $user->id);
+        $data = $request->validated();
 
         if (empty($data['password'])) {
             unset($data['password']);
@@ -49,6 +53,10 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        if ($user->id === auth()->id) {
+            return back()->with('error', 'You cannot delete yourself.');
+        }
+
         $user->delete();
 
         return redirect()->route('users.index')->with('status', 'User deleted.');

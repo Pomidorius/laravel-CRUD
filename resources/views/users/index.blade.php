@@ -24,11 +24,13 @@
                     <td>
                         <div class="actions">
                             <a class="button-link" href="{{ route('users.edit', $user) }}">Edit</a>
-                            <form method="POST" action="{{ route('users.destroy', $user) }}" onsubmit="return confirm('Delete this user?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" style="background:#b91c1c;">Delete</button>
-                            </form>
+                            @if ($user->id !== auth()->id)
+                                <form action="{{ route('users.destroy', $user) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="button-link" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
+                                </form>
+                            @endif
                         </div>
                     </td>
                 </tr>
